@@ -1,4 +1,4 @@
-[![img](https://img.shields.io/badge/Lifecycle-Maturing-007EC6)](https://github.com/bcgov/repomountie/blob/master/doc/lifecycle-badges.md)
+[![img](https://img.shields.io/badge/Lifecycle-Retired-d45500)](https://github.com/bcgov/repomountie/blob/master/doc/lifecycle-badges.md)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 
 # BC Gov Issuer Kit
@@ -52,8 +52,8 @@ To run in demo mode, open two shell/terminal sessions:
 1. From within the [ngrok](./ngrok) folder execute `./start-ngrok.sh`. This will create a tunnel for the agent.
 
 2. From within the [docker](./docker) folder:
-    - run `./manage build` to assemble the runtime images for the services
-    - when the build completes, run `./manage start-demo`
+   - run `./manage build` to assemble the runtime images for the services
+   - when the build completes, run `./manage start-demo`
 
 Once started, the services will be exposed on localhost at the following endpoints:
 
@@ -82,7 +82,8 @@ For instructions on how to run the demo, please refer to [this document](./docs/
 To restart the applications:
 
 - In the second terminal, hit Ctrl-C and then:
-  - run `./manage stop` to stop the apps so you can update the code and restart by rerunning the `./manage` commands above. 
+
+  - run `./manage stop` to stop the apps so you can update the code and restart by rerunning the `./manage` commands above.
 
 - To stop and delete the storage for the apps:
   - In the second terminal, hit Ctrl-C and run `./manage down`
@@ -120,7 +121,8 @@ Once started, the services will be exposed on localhost at the following endpoin
 To restart the applications:
 
 - In the second terminal, hit Ctrl-C and then:
-  - run `./manage stop` to stop the apps so you can update the code and restart by rerunning the `./manage` commands above. 
+
+  - run `./manage stop` to stop the apps so you can update the code and restart by rerunning the `./manage` commands above.
 
 - To stop and delete the storage for the apps:
   - In the second terminal, hit Ctrl-C and run `./manage down`
@@ -150,7 +152,7 @@ The services will be running at the following endpoints:
 
 ## Keycloak Configuration and Users
 
-While it is possible to provide a client id and token pair to use the GitHub integration for Keycloak (follow the on-screen instructions when starting the apps), two default users  are shipped with the default Keycloak configuration:
+While it is possible to provide a client id and token pair to use the GitHub integration for Keycloak (follow the on-screen instructions when starting the apps), two default users are shipped with the default Keycloak configuration:
 
 - to access the `issuer-admin` Administrator app, use the following username/password combination: `issuer-admin/issuer-admin`.
 
@@ -160,13 +162,14 @@ While it is possible to provide a client id and token pair to use the GitHub int
 
 ## Credential Schema
 
-Each api/controller can issue several credentials matching different schemas: the schema definitions that can be processed by the api/controller are described in [this file](api/config/schemas.json). There are two ways of defining a schema: using the `id` of the schema on the target ledger or, alternatively, defining the `schema_name`, `schema_version` and `attributes` for the schema. Additionally, ***one schema in the provided list must be marked with the `default: true` property***: this describes which schema will be used if no explicit request is forwarded to the api/controller.
+Each api/controller can issue several credentials matching different schemas: the schema definitions that can be processed by the api/controller are described in [this file](api/config/schemas.json). There are two ways of defining a schema: using the `id` of the schema on the target ledger or, alternatively, defining the `schema_name`, `schema_version` and `attributes` for the schema. Additionally, **_one schema in the provided list must be marked with the `default: true` property_**: this describes which schema will be used if no explicit request is forwarded to the api/controller.
 
 When using Issuer Kit in demo mode the api/controller will use the schema marked as default, which corresponds to the schema definition that was published to the BCovrin Test Ledger by the BCGov issuer, and issue credentials that match that definition. In most cases updating the schema definition should not be necessary, however if this was the case the following steps will be required to instruct the controller/agent to publish a new schema definition on the target ledger, and use it:
 
 - update the schema definition(s) in [schemas.json](api/config/schemas.json) using the desired fields.
 
 - update the configuration of the public-facing web application to support the new fields and request the new schema. The public web application is contained in the [issuer-web](./issuer-web) folder and the files to update are `claim-config.json` for the form definition and `config.json` to add (or update) the following section:
+
 ```
 "credentials": {
     "schema_id": "85459GxjNySJ8HwTTQ4vq7:2:verified_person:1.4.0"
@@ -179,9 +182,9 @@ When using Issuer Kit in demo mode the api/controller will use the schema marked
 
 The api, administrator and issuer applications can be configured by using a number of environment variables and settings stored in configuration files. The application is shipped with default configurations that work well when running in the provided dockerized environment, if settings need to be updated look for:
 
-  - `api`: all the settings are defined in the [config/default.json](api/config/default.json) file. The API is a NodeJS application built on [FeathersJS](https://docs.feathersjs.com/api/configuration.html#configuration-directory). Rather than defining multiple files for each environment, the default configuration has been extended to use environment variables that can be inected at runtime. Take a look at the relevant sections in [docker/manage](./docker/manage) and [docker/docker-compose.yml](docker/docker-compose.yml) to learn what is being injected into the api container. Additionally, the body of the email sent out as invite can be customized by updating the [api/config/invite-email.html](invite-email.html) file.
+- `api`: all the settings are defined in the [config/default.json](api/config/default.json) file. The API is a NodeJS application built on [FeathersJS](https://docs.feathersjs.com/api/configuration.html#configuration-directory). Rather than defining multiple files for each environment, the default configuration has been extended to use environment variables that can be inected at runtime. Take a look at the relevant sections in [docker/manage](./docker/manage) and [docker/docker-compose.yml](docker/docker-compose.yml) to learn what is being injected into the api container. Additionally, the body of the email sent out as invite can be customized by updating the [api/config/invite-email.html](invite-email.html) file.
 
-  - `issuer-admin` and `issuer-web` are configured using the configuration files in the respective `public/config` folders. Overriding the file shipped with the application with your custom settings file at deployment time will cause the web application to pick up the settings.
+- `issuer-admin` and `issuer-web` are configured using the configuration files in the respective `public/config` folders. Overriding the file shipped with the application with your custom settings file at deployment time will cause the web application to pick up the settings.
 
 ### SMTP Settings
 
@@ -189,15 +192,15 @@ The api/controller uses [nodemailer](https://nodemailer.com) to send email invit
 
 If you are running a deployment and require emails to be sent, set the following environment variables appropriately:
 
-  - *SMTP_HOST*: your SMTP server host.
+- _SMTP_HOST_: your SMTP server host.
 
-  - *SMTP_PORT*: the port used by your SMTP server.
+- _SMTP_PORT_: the port used by your SMTP server.
 
-  - *SMTP_USERNAME*: the username to authenticate with SMTP server.
+- _SMTP_USERNAME_: the username to authenticate with SMTP server.
 
-  - *SMTP_PASS*: the password to authenticate with the SMTP server.
-  
-  - *ADMIN_EMAIL*: the email address that will be used as sender of your emails.
+- _SMTP_PASS_: the password to authenticate with the SMTP server.
+
+- _ADMIN_EMAIL_: the email address that will be used as sender of your emails.
 
 ### API Docs
 
